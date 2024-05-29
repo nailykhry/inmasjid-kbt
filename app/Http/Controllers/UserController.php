@@ -27,7 +27,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('form.register');
+        return view('user.register');
     }
 
     /**
@@ -52,7 +52,7 @@ class UserController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
-        return redirect()->route('index')->with('success', 'User created successfully.');
+        return redirect()->route('login')->with('success', 'User created successfully.');
     }
 
     /**
