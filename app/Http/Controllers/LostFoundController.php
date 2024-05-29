@@ -17,8 +17,11 @@ class LostFoundController extends Controller
      */
     public function index()
     {
-        $items = LostFound :: with('itemImages')-> get();
-        dd($items);
+        $items = LostFound :: with('itemImages')->latest()->get();
+        return view('daftar-barang', [
+            'title' => 'Item List',
+            'items' => $items
+        ]);
     }
 
     /**
@@ -28,7 +31,9 @@ class LostFoundController extends Controller
      */
     public function create()
     {
-        return view('form.lost-found');
+        return view('items.postItem', [
+            'title' => 'Post Item'
+        ]);
     }
 
     /**
@@ -44,8 +49,8 @@ class LostFoundController extends Controller
             'item_name' => 'required|string|max:255',
             'description' => 'required|string',
             'location' => 'required|string|max:255',
-            // 'latitude' => 'required',
-            // 'longitude' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
             'pic_name' => 'required|string|max:255',
             'pic_phone' => 'required|string|max:15',
             'item_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
@@ -68,7 +73,7 @@ class LostFoundController extends Controller
             Log::info('No files uploaded');
         }
 
-        return redirect()->route('index')
+        return redirect()->route('lost-founds.index')
             ->with('success', 'Lost n Found Post berhasil ditambahkan.');
     }
 
