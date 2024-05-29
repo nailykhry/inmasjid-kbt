@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\LostFoundController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +19,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('users', UserController::class);
+Route::resource('lost-founds', LostFoundController::class);
+
+
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('auth');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+Route::get('/button-test', function () {
+    return view('form.button');
+})->name('index');
