@@ -29,7 +29,6 @@ Route::get('/chat/{user}', [PusherController::class, 'show'])->name('chat.show')
 Route::post('/chat/send', [PusherController::class, 'send'])->name('chat.send');
 
 
-
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('auth');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

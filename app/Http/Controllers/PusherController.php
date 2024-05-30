@@ -12,24 +12,31 @@ use Illuminate\Support\Facades\Auth;
 
 class PusherController extends Controller
 {
-    //nanti buat list chat aja
-    public function index()
-    {
-        $user_id = Auth::id();
-        $messages = Message::all();
-
-        return view('chat', compact('messages', 'user_id'));
-    }
-
     public function show(User $user)
     {
+        $auth = Auth::id();
+        $senderId = Message::where('receiver_id', Auth::id())
+                    ->pluck('sender_id')
+                    ->unique()
+                    ->toArray();
+        $receiverId = Message::where('sender_id', Auth::id())
+                    ->pluck('receiver_id')
+                    ->unique()
+                    ->toArray();
+
+        $userId = array_merge($senderId, $receiverId);
+        $userId = array_unique($userId);
+        $userId = array_diff($userId, [Auth::id()]);
+
+        $users = User::whereIn('id', $userId)->get();
+
         $messages = Message::where(function ($query) use ($user) {
             $query->where('sender_id', Auth::id())->where('receiver_id', $user->id);
         })->orWhere(function ($query) use ($user) {
             $query->where('sender_id', $user->id)->where('receiver_id', Auth::id());
         })->orderBy('created_at', 'asc')->get();
 
-        return view('chat', compact('user', 'messages'));
+        return view('chat', compact('users','user', 'messages'));
     }
 
 
@@ -39,6 +46,7 @@ class PusherController extends Controller
             'receiver_id' => 'required|exists:users,id',
             'message' => 'required',
         ]);
+
 
         Message::create([
             'sender_id' => Auth::id(),
