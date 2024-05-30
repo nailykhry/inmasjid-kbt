@@ -1,91 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- resources/views/chat/show.blade.php -->
 
-<head>
-    <title>Chat Laravel Pusher | Edlin App</title>
-    <link rel="icon" href="https://assets.edlin.app/favicon/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layout.main')
 
-    <!-- JavaScript -->
-    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <!-- End JavaScript -->
+@section('title', 'Home')
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="/style.css">
-    <!-- End CSS -->
-
-</head>
-
-<body>
-    <div class="chat">
-
-        <!-- Header -->
-        <div class="top">
-            <img src="https://assets.edlin.app/images/rossedlin/03/rossedlin-03-100.jpg" alt="Avatar">
-            <div>
-                <p>Ross Edlin</p>
-                <small>Online</small>
+@section('content')
+<div class="container">
+    <h3>Chat with {{ $user->username }}</h3>
+    <div class="card">
+        <div class="card-body" id="chat-box" style="height: 300px; overflow-y: scroll;">
+            @foreach ($messages as $message)
+            <div class="message">
+                @if ($message->sender_id === Auth::id())
+                <p style="text-align: right;">
+                    <strong>You:</strong> {{ $message->message }}
+                </p>
+                @else
+                <p>
+                    <strong>{{ $user->name }}:</strong> {{ $message->message }}
+                </p>
+                @endif
             </div>
+            @endforeach
         </div>
-        <!-- End Header -->
-
-        <!-- Chat -->
-        <div class="messages">
-            @include('receive', ['message' => "Hey! What's up!  👋"])
-            @include('receive', ['message' => "Ask a friend to open this link and you can chat with them!"])
-        </div>
-        <!-- End Chat -->
-
-        <!-- Footer -->
-        <div class="bottom">
-            <form>
-                <input type="text" id="message" name="message" placeholder="Enter message..." autocomplete="off">
-                <button type="submit"></button>
+        <div class="card-footer">
+            <form action="{{ route('chat.send') }}" method="post">
+                @csrf
+                <input type="hidden" name="receiver_id" value="{{ $user->id }}">
+                <div class="input-group">
+                    <input type="text" name="message" class="form-control" placeholder="Type your message here...">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary">Send</button>
+                    </span>
+                </div>
             </form>
         </div>
-        <!-- End Footer -->
-
     </div>
-</body>
-
-<script>
-    const pusher  = new Pusher('{{config('broadcasting.connections.pusher.key')}}', {cluster: 'ap1'});
-  const channel = pusher.subscribe('public');
-
-  //Receive messages
-  channel.bind('chat', function (data) {
-    $.post("/receive", {
-      _token:  '{{csrf_token()}}',
-      message: data.message,
-    })
-     .done(function (res) {
-       $(".messages > .message").last().after(res);
-       $(document).scrollTop($(document).height());
-     });
-  });
-
-  //Broadcast messages
-  $("form").submit(function (event) {
-    event.preventDefault();
-
-    $.ajax({
-      url:     "/broadcast",
-      method:  'POST',
-      headers: {
-        'X-Socket-Id': pusher.connection.socket_id
-      },
-      data:    {
-        _token:  '{{csrf_token()}}',
-        message: $("form #message").val(),
-      }
-    }).done(function (res) {
-      $(".messages > .message").last().after(res);
-      $("form #message").val('');
-      $(document).scrollTop($(document).height());
-    });
-  });
-
-</script>
-
-</html>
+</div>
+@endsection

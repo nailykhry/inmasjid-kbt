@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('lost_founds', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->enum('category', ['Hilang', 'Ditemukan'])->default('Hilang');
             $table->string('item_name');
             $table->text('description');
@@ -25,6 +26,7 @@ return new class extends Migration
             $table->string('pic_phone');
             //pic using relation
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

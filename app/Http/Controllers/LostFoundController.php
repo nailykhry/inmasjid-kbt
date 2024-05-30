@@ -7,6 +7,7 @@ use App\Models\LostFound;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class LostFoundController extends Controller
 {
@@ -56,8 +57,20 @@ class LostFoundController extends Controller
             'item_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
+        $userId = Auth::user()->id;
+        // $lostFound = LostFound::create($request->only(['category', 'item_name', 'description', 'location', 'latitude', 'longitude', 'pic_name', 'pic_phone']));
 
-        $lostFound = LostFound::create($request->only(['category', 'item_name', 'description', 'location', 'latitude', 'longitude', 'pic_name', 'pic_phone']));
+        $lostFound = LostFound::create([
+            'user_id' => $userId,
+            'category' => $request->category,
+            'item_name' => $request->item_name,
+            'description' => $request->description,
+            'location' => $request->location,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'pic_name' => $request->pic_name,
+            'pic_phone' => $request->pic_phone,
+        ]);
 
         if ($request->hasFile('item_images')) {
             foreach ($request->file('item_images') as $image) {
@@ -86,7 +99,10 @@ class LostFoundController extends Controller
     public function show($id)
     {
         $item = LostFound::with('itemImages')->findOrFail($id);
-        dd($item);
+        return view('items.itemDetail', [
+            'title' => 'Detail Item',
+            'item' => $item
+        ]);
     }
 
     /**
