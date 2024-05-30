@@ -45,7 +45,7 @@
                         <small>*Kosongkan Jika Tidak Diubah</small>
                     </div>
 
-                    <button class="btn btn-lg btn-primary float-end" type="submit">
+                    <button class="btn btn-lg btn-warning float-end" type="submit">
                         Ubah
                     </button>
                 </form>
