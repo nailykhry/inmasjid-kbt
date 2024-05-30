@@ -25,7 +25,8 @@ class LostFoundFactory extends Factory
             'latitude' => fake()->latitude(),
             'longitude' => fake()->longitude(),
             'pic_name' => fake()->name(),
-            'pic_phone' => fake()->phoneNumber()
+            'pic_phone' => fake()->phoneNumber(),
+            'user_id' => 1
         ];
     }
 

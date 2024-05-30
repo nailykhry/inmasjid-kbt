@@ -23,9 +23,11 @@ Route::get('/', [LandingPageController::class, 'index'])->name('home');
 Route::resource('users', UserController::class);
 Route::resource('lost-founds', LostFoundController::class);
 
-Route::get('/chat', [PusherController::class, 'index']);
-Route::post('/broadcast', [PusherController::class, 'broadcast']);
-Route::post('/receive', [PusherController::class, 'receive']);
+
+
+Route::get('/chat/{user}', [PusherController::class, 'show'])->name('chat.show');
+Route::post('/chat/send', [PusherController::class, 'send'])->name('chat.send');
+
 
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');

@@ -75,8 +75,9 @@
     <div class="container">
         <div class="row row-cols-xl-4 row-cols-md-2 row-cols-sm-1 pt-3 mb-4 g-3 mt-3">
             @foreach ($items as $item)
+
             <div class="col">
-                <a href="#" style="height:100%">
+                <a href="{{ route('lost-founds.show', $item['id']) }}" style="height:100%">
                     <div class="card my-2 rounded-0" style="background-color:#F4F5F7; height:100%">
                         @php
                         $imagePath = isset($item['itemImages']) && count($item['itemImages']) > 0

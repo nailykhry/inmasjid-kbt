@@ -10,6 +10,7 @@ class LostFound extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'user_id',
         'category',
         'item_name',
         'description',
