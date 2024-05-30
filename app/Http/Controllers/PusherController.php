@@ -32,20 +32,6 @@ class PusherController extends Controller
         return view('chat', compact('user', 'messages'));
     }
 
-    public function broadcast(Request $request)
-    {
-        $message = $request->input('message');
-        $user_id = $request->input('user_id');
-        broadcast(new PusherBroadcast($message, $user_id))->toOthers();
-        return view('broadcast', ['message' => $request->get('message'), 'user_id' => $user_id]);
-    }
-
-    public function receive(Request $request)
-    {
-        $message = $request->input('message');
-        $user_id = $request->input('user_id');
-        return view('message', ['message' => $message, 'user_id' => $user_id]);
-    }
 
     public function send(Request $request)
     {
