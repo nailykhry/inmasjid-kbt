@@ -64,8 +64,8 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        dd($user);
-        // return view('users.show', compact('user'));
+        return view('user.profile', compact('user'));
+
     }
 
     /**
@@ -78,7 +78,7 @@ class UserController extends Controller
     {
         // Menampilkan form untuk mengedit user berdasarkan id
         $user = User::findOrFail($id);
-        // return view('users.edit', compact('user'));
+        return view('user.profile', compact('user'));
     }
 
     /**
@@ -105,7 +105,7 @@ class UserController extends Controller
         }
         $user->save();
 
-        // return redirect()->route('index')->with('success', 'User updated successfully.');
+        return redirect()->route('home')->with('success', 'User updated successfully.');
     }
 
     /**

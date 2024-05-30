@@ -76,6 +76,12 @@
     }
 </style>
 
+@if(session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
+
 <div class="container mt-5 container-home">
     <div class="text-center py-5">
         <h1 class="fw-bold f-71">Explore categories</h1>

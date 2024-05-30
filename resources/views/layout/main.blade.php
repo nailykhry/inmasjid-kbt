@@ -59,7 +59,8 @@
                             </a>
                         </li>
                         <li class="nav-item px-2">
-                            <a class="nav-link text-dark" href="/profile">
+                            <a class="nav-link text-dark"
+                                href="{{ route('users.show',  ['user' => Auth::user()->id]) }}">
                                 <i class="fa-regular fa-circle-user"></i>
                                 Profile Settings
                             </a>
@@ -135,7 +136,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">
+                    <a class="nav-link text-dark" href="{{ route('users.show',  ['user' => Auth::user()->id]) }}">
                         <i class="fa-regular fa-circle-user fa-2x"></i>
                     </a>
                 </li>
