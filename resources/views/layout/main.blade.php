@@ -131,7 +131,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">
+                    <a class="nav-link text-dark" href="{{ route('chat.show',  Auth::user()->id) }}">
                         <i class="fa-regular fa-message fa-2x"></i>
                     </a>
                 </li>
