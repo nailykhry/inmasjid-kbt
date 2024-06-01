@@ -106,7 +106,7 @@
             </a>
         </div>
         <div class="col-md-4 d-flex align-items-stretch">
-            <a class="card bg-pink border border-0 flex-grow-1 m-4" href="#">
+            <a class="card bg-pink border border-0 flex-grow-1 m-4" href="{{ route('maps') }}">
                 <div class="card-body">
                     <h4 class="card-title fw-bold text-end">Search on map</h4>
                     <p class="card-text fw-bold text-black text-end">Search for items on location near you</p>
