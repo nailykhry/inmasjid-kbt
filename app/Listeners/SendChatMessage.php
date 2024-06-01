@@ -17,6 +17,6 @@ class SendChatMessage implements ShouldQueue
     public function handle(MessageSent $event)
     {
         // Kirimkan pesan ke listener
-        broadcast(new MessageSent($event->message));
+        // broadcast(new MessageSent($event->message));
     }
 }

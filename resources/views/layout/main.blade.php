@@ -125,11 +125,11 @@
             <ul
                 class="navbar-nav d-flex flex-row @auth justify-content-around @else justify-content-end @endauth align-items-center gap-4">
                 @auth
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link text-dark" href="#">
                         <i class="fa-solid fa-clock-rotate-left fa-2x"></i>
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="{{ route('chat.show',  Auth::user()->id) }}">
                         <i class="fa-regular fa-message fa-2x"></i>
@@ -145,10 +145,10 @@
                     <a class="nav-link" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">Lost & Found</a>
+                    <a class="nav-link" aria-current="page" href="{{ route('lost-founds.index') }}">Lost & Found</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">Maps</a>
+                    <a class="nav-link" aria-current="page" href="{{ route('maps') }}">Maps</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="#">Pricing</a>
